@@ -41,6 +41,8 @@ schema.pre("save", async function (next){
     next();
 });
 
+
+
 schema.methods.remove = async function (){
     await this.model("User").findByIdAndDelete(this._id);
 }
