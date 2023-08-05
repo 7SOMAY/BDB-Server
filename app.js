@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser';
 
 import {config} from "dotenv";
 config({
-    path: ".env",
+    path: "./config/config.env",
 });
 
 const app = express();
