@@ -189,7 +189,7 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
 
     if(!user) return next(new ErrorHandler("No users found", 404));
 
-    await user.remove();
+    await User.findByIdAndDelete(req.params.id);
     res.status(200).json({
         success: true,
         message: "User deleted successfully",
@@ -199,7 +199,8 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
 export const deleteMyAccount = catchAsyncError(async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
-    await user.remove();
+    await User.findByIdAndDelete(req.params.id);
+
     res.status(200).cookie("token",null,{
         expires: new Date(Date.now()),
     }).json({

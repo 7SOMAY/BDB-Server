@@ -42,10 +42,9 @@ schema.pre("save", async function (next){
 });
 
 
-
-schema.methods.remove = async function (){
-    await this.model("User").findByIdAndDelete(this._id);
-}
+// schema.methods.remove = async function (){
+//     await this.model("User").findByIdAndDelete(this._id);
+// }
 
 schema.methods.getJwtToken = function () {
     return jwt.sign({_id: this._id}, process.env.JWT_SECRET, {
