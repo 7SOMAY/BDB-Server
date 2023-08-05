@@ -39,7 +39,7 @@ export const login = catchAsyncError(async (req, res, next) => {
     sendToken(res, user, `Welcome back, ${user.name}`, 200);
 });
 
-export const logout = catchAsyncError(async (req, res, next) => {
+export const logout = catchAsyncError(async (req, res) => {
     res.cookie("token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
@@ -50,7 +50,7 @@ export const logout = catchAsyncError(async (req, res, next) => {
     });
 });
 
-export const getMyProfile = catchAsyncError(async (req, res, next) => {
+export const getMyProfile = catchAsyncError(async (req, res) => {
     const user = await User.findById(req.user._id);
     res.status(200).json({
         success: true,
@@ -76,7 +76,7 @@ export const updatePassword = catchAsyncError(async (req, res, next) => {
     });
 });
 
-export const updateProfile = catchAsyncError(async (req, res, next) => {
+export const updateProfile = catchAsyncError(async (req, res) => {
     const {name , email} = req.body;
 
     const user = await User.findById(req.user._id);
@@ -147,7 +147,7 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
 });
 
 
-export const addAppliance = catchAsyncError(async (req, res, next) => {
+export const addAppliance = catchAsyncError(async (req, res) => {
 
 
 
@@ -196,9 +196,7 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
     });
 });
 
-export const deleteMyAccount = catchAsyncError(async (req, res, next) => {
-    const user = await User.findById(req.params.id);
-
+export const deleteMyAccount = catchAsyncError(async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
 
     res.status(200).cookie("token",null,{
