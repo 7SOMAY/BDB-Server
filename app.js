@@ -35,6 +35,6 @@ app.use("/api/v1/", user);
 export default app;
 
 app.use("/", (req, res) => {
-    res.send(`Hi ${req.user.name}, Welcome to the Server`);
+    res.send("Hi, I am a server");
 });
 app.use(ErrorMiddleware);

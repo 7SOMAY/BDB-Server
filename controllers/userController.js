@@ -147,17 +147,6 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
     });
 });
 
-
-export const addAppliance = catchAsyncError(async (req, res) => {
-
-
-
-    res.status(200).json({
-        success: true,
-        message: "Appliance added successfully",
-    });
-});
-
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
     const users = await User.find();
 

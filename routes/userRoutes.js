@@ -9,7 +9,9 @@ import {
     forgetPassword,
     resetPassword,
     getAllUsers,
-    addAppliance, updateRole, deleteUser, deleteMyAccount
+    updateRole,
+    deleteUser,
+    deleteMyAccount
 } from "../controllers/userController.js";
 import {authorizeAdmin, isAuthenticated} from "../middlewares/auth.js";
 
@@ -41,9 +43,6 @@ router.route("/forgetpassword").post(forgetPassword);
 
 // Reset Password
 router.route("/resetpassword/:token").post(resetPassword);
-
-// Add appliance
-router.route("/addappliance").post(isAuthenticated, authorizeAdmin, addAppliance);
 
 // Admin Routes
 router.route("/admin/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
