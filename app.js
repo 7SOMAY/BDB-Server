@@ -29,13 +29,12 @@ import user from './routes/userRoutes.js';
 
 
 // Using Routes
-app.use("/", (req, res) => {
-    res.send("Hello World");
-});
-
 app.use("/api/v1/", room);
 app.use("/api/v1/", user);
 
 export default app;
 
+app.use("/", (req, res) => {
+    res.send("Hello World");
+});
 app.use(ErrorMiddleware);
