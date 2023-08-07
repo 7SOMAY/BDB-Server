@@ -49,7 +49,7 @@ export const logout = catchAsyncError(async (req, res) => {
         // sameSite: "none",
 
         // -----------------DEVELOPMENT-----------------
-        sameSite: "lax",
+        sameSite: "strict",
 
     }).json({
         success: true,
