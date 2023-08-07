@@ -42,8 +42,8 @@ export const login = catchAsyncError(async (req, res, next) => {
 export const logout = catchAsyncError(async (req, res) => {
     res.cookie("token", null, {
         expires: new Date(Date.now()),
-        secure: true,   // only works on https (Don't use it in development)
         httpOnly: true,
+        secure: true,   // only works on https (Don't use it in development)
         sameSite: "none",
     }).json({
         success: true,
