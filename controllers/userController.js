@@ -45,11 +45,11 @@ export const logout = catchAsyncError(async (req, res) => {
         httpOnly: true,
 
         // --------------AFTER DEPLOYMENT---------------
-        // secure: true,   // only works on https (Don't use it in development)
-        // sameSite: "none",
+        secure: true,   // only works on https (Don't use it in development)
+        sameSite: "none",
 
         // -----------------DEVELOPMENT-----------------
-        sameSite: "strict",
+        // sameSite: "strict",
 
     }).json({
         success: true,
