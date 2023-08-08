@@ -40,6 +40,9 @@ export const login = catchAsyncError(async (req, res, next) => {
 });
 
 export const logout = catchAsyncError(async (req, res) => {
+    // Set Cache-Control headers to prevent caching
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+
     res.cookie("token", "", {
         expires: new Date(0),
         httpOnly: true,

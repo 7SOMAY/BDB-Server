@@ -31,7 +31,6 @@ app.use(cors({
 import room from './routes/roomRoutes.js';
 import user from './routes/userRoutes.js';
 
-
 // Using Routes
 app.use("/api/v1/", room);
 app.use("/api/v1/", user);
