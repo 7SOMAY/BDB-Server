@@ -17,9 +17,6 @@ import {authorizeAdmin, isAuthenticated} from "../middlewares/auth.js";
 
 const router = express.Router();
 
-// Get All Users
-router.route("/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
-
 // Register User
 router.route("/register").post(register);
 
@@ -45,7 +42,7 @@ router.route("/forgetpassword").post(forgetPassword);
 router.route("/resetpassword/:token").post(resetPassword);
 
 // Admin Routes
-router.route("/admin/users").get(isAuthenticated, authorizeAdmin, getAllUsers);
+router.route("/admin/users").get(isAuthenticated, getAllUsers);
 
 // Update Role
 router.route("/admin/user/:id").put(isAuthenticated, authorizeAdmin, updateRole);
