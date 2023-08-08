@@ -51,7 +51,9 @@ export const logout = catchAsyncError(async (req, res) => {
         // -----------------DEVELOPMENT-----------------
         // sameSite: "strict",
 
-    }).json({
+    });
+
+    res.status(200).json({
         success: true,
         message: "Logged out successfully",
     });
@@ -69,10 +71,10 @@ export const updatePassword = catchAsyncError(async (req, res, next) => {
     const {oldPassword, newPassword} = req.body;
 
     const user = await User.findById(req.user._id).select("+password");
-    if(!oldPassword || !newPassword) return next(new ErrorHandler("Please enter all fields", 400));
+    if (!oldPassword || !newPassword) return next(new ErrorHandler("Please enter all fields", 400));
 
     const isPasswordMatched = await user.comparePassword(oldPassword);
-    if(!isPasswordMatched) return next(new ErrorHandler("Incorrect Old Password", 401));
+    if (!isPasswordMatched) return next(new ErrorHandler("Incorrect Old Password", 401));
 
     user.password = newPassword;
     await user.save();
@@ -84,12 +86,12 @@ export const updatePassword = catchAsyncError(async (req, res, next) => {
 });
 
 export const updateProfile = catchAsyncError(async (req, res) => {
-    const {name , email} = req.body;
+    const {name, email} = req.body;
 
     const user = await User.findById(req.user._id);
 
-    if(name) user.name = name;
-    if(email) user.email = email;
+    if (name) user.name = name;
+    if (email) user.email = email;
 
     await user.save();
 
@@ -104,7 +106,7 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
 
     const user = await User.findOne({email});
 
-    if(!user) return next(new ErrorHandler("User not found", 404));
+    if (!user) return next(new ErrorHandler("User not found", 404));
 
     const resetToken = await user.getResetPasswordToken();
 
@@ -114,7 +116,7 @@ export const forgetPassword = catchAsyncError(async (req, res, next) => {
 
     const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`;
 
-    await sendEmail(user.email,"BDB Gang Reset Password",message);
+    await sendEmail(user.email, "BDB Gang Reset Password", message);
 
 
     res.status(200).json({
@@ -133,13 +135,13 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
         .digest("hex");
 
     const user = await User.findOne({
-        ResetPasswordToken : resetPasswordToken,
+        ResetPasswordToken: resetPasswordToken,
         ResetPasswordExpire: {
             $gt: Date.now(),
         },
     });
 
-    if(!user) return next(new ErrorHandler("Password reset token is invalid or has been expired", 400));
+    if (!user) return next(new ErrorHandler("Password reset token is invalid or has been expired", 400));
 
     user.password = password;
     user.ResetPasswordToken = undefined;
@@ -156,7 +158,7 @@ export const resetPassword = catchAsyncError(async (req, res, next) => {
 export const getAllUsers = catchAsyncError(async (req, res, next) => {
     const users = await User.find();
 
-    if(!users) return next(new ErrorHandler("No users found", 404));
+    if (!users) return next(new ErrorHandler("No users found", 404));
 
     res.status(200).json({
         success: true,
@@ -167,9 +169,9 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
 export const updateRole = catchAsyncError(async (req, res, next) => {
     const users = await User.findById(req.params.id);
 
-    if(!users) return next(new ErrorHandler("No users found", 404));
+    if (!users) return next(new ErrorHandler("No users found", 404));
 
-    if(users.role === "user") users.role = "admin";
+    if (users.role === "user") users.role = "admin";
     else users.role = "user";
 
     await users.save();
@@ -183,7 +185,7 @@ export const updateRole = catchAsyncError(async (req, res, next) => {
 export const deleteUser = catchAsyncError(async (req, res, next) => {
     const user = await User.findById(req.params.id);
 
-    if(!user) return next(new ErrorHandler("No users found", 404));
+    if (!user) return next(new ErrorHandler("No users found", 404));
 
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({
@@ -195,7 +197,7 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
 export const deleteMyAccount = catchAsyncError(async (req, res) => {
     await User.findByIdAndDelete(req.params.id);
 
-    res.status(200).cookie("token",null,{
+    res.status(200).cookie("token", null, {
         expires: new Date(Date.now()),
     }).json({
         success: true,
