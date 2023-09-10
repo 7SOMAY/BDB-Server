@@ -51,7 +51,7 @@ router.route("/admin/user/:id").put(isAuthenticated, authorizeAdmin, updateRole)
 router.route("/admin/user/:id").delete(isAuthenticated, authorizeAdmin, deleteUser);
 
 // Delete My Account
-router.route("/me").delete(isAuthenticated, deleteMyAccount);
+router.route("/:me").delete(isAuthenticated, deleteMyAccount);
 
 
 export default router;

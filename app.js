@@ -2,7 +2,6 @@ import express from 'express';
 import ErrorMiddleware from "./middlewares/Error.js";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
 import {config} from "dotenv";
 
 config({
@@ -17,11 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
-    // --------------AFTER DEPLOYMENT---------------
-    origin: "https://bdb-home.vercel.app",
-
-    // -----------------DEVELOPMENT-----------------
-    // origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
 }));
@@ -38,6 +33,10 @@ app.use("/api/v1/", user);
 export default app;
 
 app.use("/", (req, res) => {
-    res.send("Hi, I am a server");
+    res.send(
+        "<body style='background-color: black; color: aquamarine;'>" +
+        "BDB Server" +
+        "</body>"
+    );
 });
 app.use(ErrorMiddleware);

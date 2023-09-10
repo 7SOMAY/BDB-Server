@@ -193,17 +193,18 @@ export const deleteUser = catchAsyncError(async (req, res, next) => {
     await User.findByIdAndDelete(req.params.id);
     res.status(200).json({
         success: true,
-        message: "User deleted successfully",
+        message: "Member removed successfully",
     });
 });
 
 export const deleteMyAccount = catchAsyncError(async (req, res) => {
-    await User.findByIdAndDelete(req.params.id);
+
+    await User.findByIdAndDelete(req.user._id);
 
     res.status(200).cookie("token", null, {
         expires: new Date(Date.now()),
     }).json({
         success: true,
-        message: "Account deleted successfully",
+        message: "BDB left successfully",
     });
 });
