@@ -163,9 +163,17 @@ export const getAllUsers = catchAsyncError(async (req, res, next) => {
 
     if (!users) return next(new ErrorHandler("No users found", 404));
 
+    let adminCount = 0;
+    users.map(member => {
+        if (member.role === 'admin') {
+            adminCount++;
+        }
+    })
+
     res.status(200).json({
         success: true,
         users,
+        adminCount,
     });
 });
 
