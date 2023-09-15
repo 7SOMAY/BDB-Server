@@ -5,8 +5,6 @@ import ErrorHandler from "../utils/errorHandler.js";
 export const getRooms = catchAsyncError(async (req, res) => {
     const rooms = await Room.find();
 
-    console.log(rooms);
-
     res.status(200).json({
         status: "success",
         rooms,
