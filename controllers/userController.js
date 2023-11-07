@@ -11,9 +11,17 @@ export const register = catchAsyncError(async (req, res, next) => {
         return next(new ErrorHandler("Please enter all fields", 400));
     }
     let user = await User.findOne({email});
+
     if (user) {
-        return next(new ErrorHandler("User already exists", 409));
+        return next(new ErrorHandler("User email or name already exists", 409));
     }
+
+    user = await User.findOne({name});
+
+    if (user) {
+        return next(new ErrorHandler("User email or name already exists", 409));
+    }
+
     user = await User.create({
         name,
         email,
